@@ -53,7 +53,7 @@ class CephOsdPlugin(base.Base):
         } }
         output = None
         try:
-            output = subprocess.check_output('ceph osd dump --format json', shell=True)
+            output = subprocess.Popen(['ceph', 'osd', 'dump', '--format', 'json'], stdout=subprocess.PIPE).communicate()[0].replace('\n','')
         except Exception as exc:
             collectd.error("ceph-osd: failed to ceph osd dump :: %s :: %s"
                     % (exc, traceback.format_exc()))
